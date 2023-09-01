@@ -139,7 +139,7 @@ export const Select = ({ label, buttonText = "Select...", options }: Props) => {
   return (
     <SelectWrapper>
       <Label htmlFor={id}>{label}</Label>
-      {/* <Button ref={refs.setReference} variant="select" {...getReferenceProps()}> */}
+      {/* make this a real button */}
       <FakeButton
         id={id}
         tabIndex={0}
@@ -148,7 +148,6 @@ export const Select = ({ label, buttonText = "Select...", options }: Props) => {
       >
         {setName || buttonText}
       </FakeButton>
-      {/* </Button> */}
       {isOpen && (
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false}>
