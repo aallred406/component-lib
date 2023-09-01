@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import { styled } from "styled-components";
 import { ModalContext } from "./modal-context";
 import { Focus, VisuallyHidden } from "../../global/styles/styles";
-import { Button } from "..";
 import { Close } from "../../assets/close";
 
 const ModalOverlay = styled.div`
@@ -56,6 +55,7 @@ const FlexContainer = styled.div`
 const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
 `;
 
 const Body = styled.div`
@@ -90,12 +90,6 @@ export const ModalBody = ({ children }: Props) => <Body>{children}</Body>;
 
 export const ModalFooter = ({ children }: Props) => <Footer>{children}</Footer>;
 
-export const FooterCloseBtn = ({ children }: Props) => {
-  const { onModalClose } = useContext(ModalContext);
-
-  return <Button onClick={onModalClose}>{children}</Button>;
-};
-
 export const Modal = ({ children, onModalClose }: ModalProps) => {
   const modalRef = useRef<MutableRefObject<HTMLDivElement>>(null);
 
@@ -115,14 +109,14 @@ export const Modal = ({ children, onModalClose }: ModalProps) => {
     const firstItem = focusableItems[0];
     const lastItem = focusableItems[focusableItems.length - 1];
 
-    if (!e.shiftKey && document.activeElement !== firstItem) {
-      firstItem.focus();
+    if (e.shiftKey && document.activeElement === firstItem) {
+      lastItem.focus();
       return e.preventDefault();
     }
 
-    if (e.shiftKey && document.activeElement !== lastItem) {
-      lastItem.focus();
-      e.preventDefault();
+    if (!e.shiftKey && document.activeElement === lastItem) {
+      firstItem.focus();
+      return e.preventDefault();
     }
   }
 

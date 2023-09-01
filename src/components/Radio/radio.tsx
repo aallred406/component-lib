@@ -45,17 +45,18 @@ type RadioProps = {
   name: string;
   label: string;
   value: string;
+  checked: boolean;
 };
 
-export const Radio = ({ name, label, value }: RadioProps) => {
-  const { selected, handleChange } = useRadioContext();
+export const Radio = ({ name, label, value, checked }: RadioProps) => {
+  const { handleChange } = useRadioContext();
   return (
     <Label>
       <Input
         type="radio"
         name={name}
         value={value}
-        checked={selected === value}
+        checked={checked}
         onChange={(e) => handleChange(e)}
       />
       {label}

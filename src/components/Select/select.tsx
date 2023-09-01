@@ -13,11 +13,13 @@ import {
   useRole,
 } from "@floating-ui/react";
 import { Focus } from "../../global/styles/styles";
+import { FormValues } from "../../pages/form";
 
 type Props = {
   label: React.ReactNode;
   buttonText?: string;
   options: string[];
+  state: FormValues;
 };
 
 const SelectWrapper = styled.div`
@@ -60,6 +62,7 @@ const List = styled.ul`
   padding: 0;
   background: #fff;
   margin: 0;
+  width: 300px;
 
   &:focus-visible {
     outline: none;
@@ -79,7 +82,12 @@ const ListItem = styled.li`
   }
 `;
 
-export const Select = ({ label, buttonText = "Select...", options }: Props) => {
+export const Select = ({
+  label,
+  buttonText = "Select...",
+  options,
+  state,
+}: Props) => {
   // generate unique id
   const id = useId();
 
@@ -133,6 +141,7 @@ export const Select = ({ label, buttonText = "Select...", options }: Props) => {
   // change handler
   const handleSelect = (index: number) => {
     setSelectedIndex(index);
+    state.selection = options[index];
     setIsOpen(false);
   };
 

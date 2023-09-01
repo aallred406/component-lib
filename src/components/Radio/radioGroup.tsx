@@ -1,7 +1,7 @@
-import { SetStateAction, useState } from "react";
 import { RadioContext } from "./radio-context";
 import { styled } from "styled-components";
 import { StyledLabel } from "../../global/styles/styles";
+import { FormValues } from "../../pages/form";
 
 const Fieldset = styled.fieldset`
   border: none;
@@ -15,22 +15,15 @@ const Legend = styled.legend`
 type Props = {
   label: string;
   children: React.ReactNode;
+  state: FormValues;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const RadioGroup = ({ label, children }: Props) => {
-  const [selected, setSelected] = useState("");
-
-  const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
-    console.log("selected", e.target.value);
-    setSelected(e.target.value);
-  };
-
-  return (
-    <RadioContext.Provider value={{ selected, handleChange }}>
-      <Fieldset>
-        <Legend>{label}</Legend>
-        {children}
-      </Fieldset>
-    </RadioContext.Provider>
-  );
-};
+export const RadioGroup = ({ label, children, handleChange, state }: Props) => (
+  <RadioContext.Provider value={{ state, handleChange }}>
+    <Fieldset>
+      <Legend>{label}</Legend>
+      {children}
+    </Fieldset>
+  </RadioContext.Provider>
+);

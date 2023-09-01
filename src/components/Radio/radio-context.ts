@@ -1,9 +1,9 @@
-import { SetStateAction, createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 
 export const RadioContext = createContext({
-  selected: "",
+  state: { likeIt: { value: "", checked: false }, selection: "" },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  handleChange: (e: { target: { value: SetStateAction<string> } }) => {},
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => {},
 });
 
 export const useRadioContext = () => {
