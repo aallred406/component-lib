@@ -94,13 +94,18 @@ export const Modal = ({ children, onModalClose }: ModalProps) => {
   const modalRef = useRef<MutableRefObject<HTMLDivElement>>(null);
 
   useEffect(() => {
+    const keyListenerMap = new Map([
+      [27, onModalClose],
+      [9, handleTab],
+    ]);
+
     function handleKeyPress(e: { keyCode: number }) {
       const listener = keyListenerMap.get(e.keyCode);
       return listener && listener(e);
     }
     document.addEventListener("keydown", handleKeyPress);
     return () => document.removeEventListener("keydown", handleKeyPress);
-  });
+  }, [onModalClose]);
 
   function handleTab(e: { shiftKey: unknown; preventDefault: () => void }) {
     const focusableItems = modalRef.current?.querySelectorAll(
@@ -120,14 +125,9 @@ export const Modal = ({ children, onModalClose }: ModalProps) => {
     }
   }
 
-  const keyListenerMap = new Map([
-    [27, onModalClose],
-    [9, handleTab],
-  ]);
-
   return createPortal(
     <ModalContext.Provider value={{ onModalClose }}>
-      <ModalOverlay>
+      <ModalOverlay onClick={onModalClose}>
         <ModalWrapper role="dialog" ref={modalRef}>
           {children}
         </ModalWrapper>
